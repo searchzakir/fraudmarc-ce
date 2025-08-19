@@ -89,12 +89,11 @@ GROUP BY source_ip, esp, domain_name, reverse_lookup,
 	qargs := []interface{}{domain, start, end}
 
 	rows, errQuery := DB.Query(qsql, qargs...)
-	defer rows.Close()
-
 	if errQuery != nil {
 		log.Println("errQuery:  ", errQuery)
 		return results, thecounts
 	}
+	defer rows.Close()
 
 	//----------------------------------------------------------------
 	// for each row, keep counts of the respective alignments:

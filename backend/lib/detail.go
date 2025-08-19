@@ -108,12 +108,11 @@ AND dre.end_date <= $3
 	qsql = fmt.Sprintf("%s%s ORDER BY count DESC LIMIT %d", qsql, groupTerm, MAX_ROWS)
 
 	rows, errQuery := DB.Query(qsql, qargs...)
-	defer rows.Close()
-
 	if errQuery != nil {
 		log.Println("errQuery:  ", errQuery)
 		return results
 	}
+	defer rows.Close()
 
 	k := 0
 	for rows.Next() {
